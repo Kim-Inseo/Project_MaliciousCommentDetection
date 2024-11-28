@@ -43,10 +43,8 @@
  ┃ ┣ fastText_pretrained.model.wv.vectors_vocab.npy
  ┃ ┣ tokenizer.pickle
  ┃ ┗ var_utils.json
- ┣ comment.py
  ┣ config.py
  ┣ main.py
- ┣ main_local.py
  ┣ modeling.py
  ┣ models.py
  ┣ preparing_nlp.py
