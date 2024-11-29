@@ -16,7 +16,7 @@
 
 ## 프로젝트 구조
 
-- 용량이 큰 파일 등등은 GitHub에 업로드하지 않았음
+- 용량이 큰 fastText.model.wv.vectors_ngrams.npy는 업로드하지 않았음.
 
 ```
 악성_댓글_탐지
@@ -35,6 +35,7 @@
  ┃ ┗ var_models.json
  ┣ utils
  ┃ ┣ fastText.model
+ ┃ ┣ fastText.model.wv.vectors_ngrams.npy
  ┃ ┣ tokenizer.pickle
  ┃ ┗ var_utils.json
  ┣ config.py
