@@ -4,7 +4,6 @@ class ConfigModel:
         self.var_models_path = var_models_path
 
 class ConfigUtils:
-    def __init__(self, tokenizer_path, var_utils_path, fasttext_path):
-        self.tokenizer_path = tokenizer_path
+    def __init__(self, var_utils_path, fasttext_path):
         self.var_utils_path = var_utils_path
         self.fasttext_path = fasttext_path

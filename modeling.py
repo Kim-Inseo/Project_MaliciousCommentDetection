@@ -1,5 +1,6 @@
 import torch
 import json
+import numpy as np
 from config import ConfigModel
 import torch.nn.functional as F
 from models import CustomModel
@@ -17,7 +18,7 @@ class CustomDataset(Dataset):
 
     def __getitem__(self, idx):
         item = {}
-        item['embeddings'] = torch.Tensor(self.embeddings[idx])
+        item['embeddings'] = torch.Tensor(np.array(self.embeddings[idx]))
         return item
 
     def __len__(self):

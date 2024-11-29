@@ -25,22 +25,16 @@
  ┃ ┃ ┣ code_modeling.ipynb
  ┃ ┃ ┗ code_preprocessing.ipynb
  ┃ ┗ datasets
- ┃ ┃ ┣ correction_data.csv
+ ┃ ┃ ┣ cleaned_data.csv
  ┃ ┃ ┣ Dataset.csv
- ┃ ┃ ┣ test.csv
- ┃ ┃ ┣ train.csv
- ┃ ┃ ┣ val.csv
- ┃ ┃ ┣ X_test.pt
- ┃ ┃ ┣ X_train.pt
- ┃ ┃ ┗ X_val.pt
+ ┃ ┃ ┣ test_data.csv
+ ┃ ┃ ┣ train_data.csv
+ ┃ ┃ ┣ val_data.csv
  ┣ models
  ┃ ┣ checkpoint.pt
  ┃ ┗ var_models.json
  ┣ utils
- ┃ ┣ fastText_pretrained.model
- ┃ ┣ fastText_pretrained.model.syn1neg.npy
- ┃ ┣ fastText_pretrained.model.wv.vectors_ngrams.npy
- ┃ ┣ fastText_pretrained.model.wv.vectors_vocab.npy
+ ┃ ┣ fastText.model
  ┃ ┣ tokenizer.pickle
  ┃ ┗ var_utils.json
  ┣ config.py
@@ -55,7 +49,7 @@
 
 ## 실행 예시
 
-- 대략 1분 20초 소요
+- 대략 50초 소요
 - 더 줄일 수 있는 방법이 있는지 고민할 예정
   
 ```
@@ -63,12 +57,12 @@
   "idx_0": {
     "text": "도전을 안 하는 것만큼 무의미한 것은 없어",
     "악성 댓글 여부": "악성 댓글 아님",
-    "확률": "93.44%"
+    "확률": "77.28%"
   },
   "idx_1": {
     "text": "야 이 자식아 너 뭐하냐 죽여버린다",
     "악성 댓글 여부": "악성 댓글",
-    "확률": "96.74%"
+    "확률": "94.44%"
   }
 }
 ```

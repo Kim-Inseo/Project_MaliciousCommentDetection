@@ -1,11 +1,58 @@
 from konlpy.tag import Okt
 from transformers import T5ForConditionalGeneration, T5Tokenizer
+import re
 
 corr_model = T5ForConditionalGeneration.from_pretrained('j5ng/et5-typos-corrector')
 tokenizer = T5Tokenizer.from_pretrained('j5ng/et5-typos-corrector')
 
 okt = Okt()
 stopwords = ['하다']
+
+punct = "/-'?!.,#$%\'()*+-/:;<=>@[\\]^_`{|}~" + '""“”’' + '∞θ÷α•à−β∅³π‘₹´°£€\×™√²—–&'
+punct_mapping = {"‘": "'", "₹": "e", "´": "'", "°": "", "€": "e", "™": "tm", "√": " sqrt ",
+                 "×": "x", "²": "2", "—": "-", "–": "-", "’": "'", "_": "-", "`": "'", '“': '"',
+                 '”': '"', '“': '"', "£": "e", '∞': 'infinity', 'θ': 'theta', '÷': '/', 'α': 'alpha',
+                 '•': '.', 'à': 'a', '−': '-', 'β': 'beta', '∅': '', '³': '3', 'π': 'pi', }
+
+
+def clean(text, punct, mapping):
+    '''
+    :param text: 한국어 문장
+    :param punct: 문장 부호, 기호 등등을 포함한 문자열
+    :param mapping: 각각의 기호를 대체하기 위한 사전
+    :return: 기호가 대체된 한국어 문장
+    '''
+    for p in mapping:
+        text = text.replace(p, mapping[p])
+
+    for p in punct:
+        text = text.replace(p, f' {p} ')
+
+    specials = {'\u200b': ' ', '…': ' ... ', '\ufeff': '', 'करना': '', 'है': ''}
+    for s in specials:
+        text = text.replace(s, specials[s])
+
+    return text.strip()
+
+
+def clean_str(text):
+    '''
+    :param text: 기호가 대체된 한국어 문장
+    :return: 텍스트 클리닝이 완료된 한국어 문장
+    '''
+    pattern = '([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)' # E-mail 제거
+    text = re.sub(pattern=pattern, repl='', string=text)
+    pattern = '(http|ftp|https)://(?:[-\w.]|(?:%[\da-fA-F]{2}))+' # URL 제거
+    text = re.sub(pattern=pattern, repl='', string=text)
+    pattern = '([ㄱ-ㅎㅏ-ㅣ]+)'  # 한글 자음, 모음 제거
+    text = re.sub(pattern=pattern, repl='', string=text)
+    pattern = '<[^>]*>'         # HTML 태그 제거
+    text = re.sub(pattern=pattern, repl='', string=text)
+    pattern = '[^\w\s\n]'         # 특수 기호 제거
+    text = re.sub(pattern=pattern, repl='', string=text)
+    text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]','', string=text)
+    text = re.sub('\n', '.', string=text)
+    return text
 
 # 맞춤법 수정 함수
 def spell_correction(text_list, corr_model, tokenizer):
@@ -71,7 +118,12 @@ def preprocess_text(text_list):
 
     spell_correction(), tokenize()를 한 함수로 묶음
     '''
-    corr_text_list = spell_correction(text_list, corr_model, tokenizer)
+    cleaned_text_list = []
+    for text in text_list:
+        cleaned_text = clean(text, punct, punct_mapping)
+        cleaned_text = clean_str(cleaned_text)
+        cleaned_text_list.append(cleaned_text)
+    corr_text_list = spell_correction(cleaned_text_list, corr_model, tokenizer)
     output_tokens_list = tokenize(corr_text_list, okt, stopwords)
 
     return output_tokens_list

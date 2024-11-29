@@ -15,9 +15,8 @@ def padding(text_list):
     지정된 max_len보다 큰 sequence가 들어오면 초과된 길이의 앞 부분을 잘라내고,
     지정된 max_len보다 작은 sequence가 들어오면 모자란 길이의 앞 부분에 <pad>를 추가
     '''
-    config_utils = ConfigUtils(tokenizer_path='./utils/tokenizer.pickle',
-                               var_utils_path='./utils/var_utils.json',
-                               fasttext_path='./utils/fastText_pretrained.model')
+    config_utils = ConfigUtils(var_utils_path='./utils/var_utils.json',
+                               fasttext_path='./utils/fastText.model')
     var_utils_path = config_utils.var_utils_path
     with open(var_utils_path, 'r') as f:
         var_utils_dict = json.load(f)
@@ -47,9 +46,8 @@ def vectorization(text_list):
     사전 훈련된 FastText 모델을 이용해 단어 토큰을 임베딩 벡터로 변환
     FastText 모델은 OOV에 해당하는 단어도 임베딩 벡터로 바꿀 수 있다.
     '''
-    config_utils = ConfigUtils(tokenizer_path='./utils/tokenizer.pickle',
-                               var_utils_path='./utils/var_utils.json',
-                               fasttext_path='./utils/fastText_pretrained.model')
+    config_utils = ConfigUtils(var_utils_path='./utils/var_utils.json',
+                               fasttext_path='./utils/fastText.model')
     fasttext_path = config_utils.fasttext_path
 
     fastText = FastText.load(fasttext_path)

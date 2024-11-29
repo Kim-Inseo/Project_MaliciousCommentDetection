@@ -25,6 +25,6 @@ async def classify_comment(item: Item):
         result['악성 댓글 여부'] = after_classify[i][0]
         result['확률'] = '{:.2f}%'.format(after_classify[i][1].item() * 100)
 
-        result_list[f'idx_{i}'] = result
+        result_list[f'{i+1}번째 문장'] = result
 
     return result_list
