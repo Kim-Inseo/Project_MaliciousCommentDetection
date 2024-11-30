@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 
 from preprocessing import preprocess_text
@@ -7,11 +7,15 @@ from preparing_nlp import prepare_nlp
 from modeling import classify
 
 class Item(BaseModel):
-    text: List[str]
+    text: List[str] = Field(examples=['도전을 안 하는 것만큼 무의미한 것은 없어'])
 
 app = FastAPI()
 
-@app.post('/items/')
+@app.get('/')
+async def welcome():
+    return {'message': 'Welcome to Malicious Comments Detection API'}
+
+@app.post('/predict')
 async def classify_comment(item: Item):
     after_preprocess = preprocess_text(item.text)
     after_prepare = prepare_nlp(after_preprocess)

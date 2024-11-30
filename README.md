@@ -9,17 +9,16 @@
 ## 프로젝트 기간
 - 2024년 11월 25일 ~
 - 계속 수정 예정
-- FastAPI 부분은 아직 완성된 상태가 아님.
 
 ## 참여 인원
 - 개인 프로젝트
 
 ## 프로젝트 구조
 
-- 용량이 큰 fastText.model.wv.vectors_ngrams.npy는 업로드하지 않았음.
+- 용량이 큰 fastText.model.wv.vectors_ngrams.npy는 업로드하지 않았음
 
 ```
-악성_댓글_탐지
+Project_MaliciousCommentDetection
  ┣ codes_and_datasets
  ┃ ┣ codes
  ┃ ┃ ┣ code_modeling.ipynb
@@ -39,28 +38,28 @@
  ┃ ┣ tokenizer.pickle
  ┃ ┗ var_utils.json
  ┣ config.py
- ┣ main.py
+ ┣ main.py              # FastAPI가 있는 부분
  ┣ modeling.py
  ┣ models.py
  ┣ preparing_nlp.py
  ┣ preprocessing.py
  ┣ README.md
+ ┣ request_example.py   # API 실행 예시
  ┗ requirements.txt
 ```
 
 ## 실행 예시
 
 - 대략 50초 소요
-- 더 줄일 수 있는 방법이 있는지 고민할 예정
   
 ```
 {
-  "idx_0": {
+  "1번째 문장": {
     "text": "도전을 안 하는 것만큼 무의미한 것은 없어",
     "악성 댓글 여부": "악성 댓글 아님",
     "확률": "77.28%"
   },
-  "idx_1": {
+  "2번째 문장": {
     "text": "야 이 자식아 너 뭐하냐 죽여버린다",
     "악성 댓글 여부": "악성 댓글",
     "확률": "94.44%"
